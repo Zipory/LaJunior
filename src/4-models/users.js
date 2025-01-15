@@ -1,9 +1,12 @@
 import { createUpdateKeys, createUpdateValues } from "../5-logic/usersLogic.js";
 import {pool, initializeDbPool} from "./mysql_connection.js"
 
+// only in develop time!
+await initializeDbPool();
+//
+
 /**Return array of users. */
 export async function getAllUsers() {
-    await initializeDbPool();
     let [users] = await pool.query(
         `SELECT UserID, UserName, Email, Phone, Password, Description
          FROM users`
@@ -15,7 +18,6 @@ export async function getAllUsers() {
  * get argument user id number.
  */
 export async function getUser(UserID) {
-    await initializeDbPool();
     let [[user]] = await pool.query(
          `SELECT UserID, UserName, Email, Phone, Password, Description
           FROM users
@@ -26,7 +28,6 @@ export async function getUser(UserID) {
 
 /**add new user to the database. */
 export async function addUser({UserName, Email, Phone, Password, Description}) {
-    await initializeDbPool();
     let isCreate = await pool.query(
         `INSERT INTO users(UserName, Phone, Email, Password, Description)
          VALUES(?, ?, ?, ?, ?);`, [UserName, Email, Phone, Password, Description]
