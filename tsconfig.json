@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+        "target": "ES5",
+        "allowJs": true,
+        "esModuleInterop": true,
+        "outDir": "build",
+        "lib": ["es2017", "dom"],
+        "noEmitHelpers": false,
+    }
+}
