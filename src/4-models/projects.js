@@ -1,9 +1,12 @@
 import { createUpdateKeys, createUpdateValues } from "../5-logic/usersLogic.js";
 import {pool, initializeDbPool} from "./mysql_connection.js"
 
+// only in develop time!
+await initializeDbPool();
+//
+
 /**Return array of projects. */
 export async function getAllProjects() {
-    await initializeDbPool();
     let [projects] = await pool.query(
         `SELECT ProjectID,  ProjectName, ProjectOwner, Description, ProjectStartDate, ProjectEndDate
          FROM Projects
@@ -16,7 +19,6 @@ export async function getAllProjects() {
  * get argument project id number.
  */
 export async function getProject(ProjectID) {
-    await initializeDbPool();
     let [[project]] = await pool.query(
         `SELECT ProjectID, ProjectName, ProjectOwner, Description, ProjectStartDate, ProjectEndDate
          FROM Projects
@@ -30,7 +32,6 @@ export async function getProject(ProjectID) {
  * the second is object of the user that create the project.
  */
 export async function addProject({ProjectName, Description}, {UserID}) { 
-    await initializeDbPool();
     let [isCreated] = await pool.query(
         `INSERT INTO Projects(ProjectName, Description, ProjectOwner)
          VALUES(?, ?, ?);`, [ProjectName, Description, UserID]
@@ -43,11 +44,8 @@ export async function addProject({ProjectName, Description}, {UserID}) {
 */
 export async function updateProject(project) {
     let oldProject = await getProject(project.ProjectID);
-    console.log(46, oldProject);
     let updateKeys = createUpdateKeys(oldProject, project);
-    console.log(48, updateKeys);
     let updateValues = createUpdateValues(updateKeys, project);
-    console.log(50, updateValues);
     let [isUpdate] = await pool.query(
     `UPDATE Projects
      SET ${updateKeys.map((key) => `${key} = ?`).join(", ")}
@@ -58,7 +56,6 @@ export async function updateProject(project) {
 
 /**delete project, change the column 'isDeleted' to be true (1). */
 export async function deleteProject({ProjectID}) {
-    await initializeDbPool();
     let [isDeleted] = await pool.query(
         `UPDATE Projects
          SET isDeleted = 1
