@@ -14,9 +14,12 @@ export async function addUserType_User(UserID, UserTypeID, UserLevel) {
          VALUES(?, ?, ?);`, [UserTypeID, UserID, UserLevel]
     );
     return isCreate;
-}
+};
 
 
 async function test() {
-    let res = addUserType_User(2, 3, 1);
-}
+    let res = addUserType_User(1, 1, 1);
+    console.log(res);
+    
+};
+test();

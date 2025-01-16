@@ -69,23 +69,24 @@ export async function deleteProject({ProjectID}) {
 async function test() {
     let project = {
         ProjectID: 1,
-        ProjectName: "bbbbb", 
+        ProjectName: "cccccc", 
         Description : "I want to check my email<not>",
-        ProjectOwner : 1
+        ProjectOwner : 2
     }
     let UserID = 3;
     
     let person2 = {
-        UserID : 3,
-        UserName : "Yosy",
+        UserID : 2,
+        UserName : "Moty",
          Email : "bos@bos",
           Phone : "05123123321",
            Password : "1234321",
             Description : "very nice guy "
     }
+    let res = await addProject(project, person2);
     // let res = await updateProject(project);
-    let res = await deleteProject(project);
+    // let res = await deleteProject(project);
     console.log(res);
     
 }
-// test();
+test();

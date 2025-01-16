@@ -67,7 +67,7 @@ async function test() {
      'UserTypeID': 2,
     'UserTypeName': 'designer'
    }
-    let res = await addUserType(usertype);
+    let res = await addUserType(usertype2);
     // let res = await getAllUserTypes();
     // let res = await getUserType(2);
     // let res = await updateUserType(usertype2);
