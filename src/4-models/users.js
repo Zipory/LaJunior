@@ -70,9 +70,10 @@ async function test() {
            Password : "1234321",
             Description : "very nice guy "
     }
+    let res1 = await addUser(person2);
     let res = await getAllUsers() ;
-    console.log(res);
+    console.log(res1);
 }
-// test();
+test();
 
 

@@ -80,13 +80,13 @@ async function test() {
     'JobDescription' : "backend with paython",
     }
     let project = {
-        'ProjectID' : 1
+        'ProjectID' : 3
     }
     let UserID = 3;
     // let res = await getAllJobsPerProject(3);
     // let res = await getJob(3);
     // let res = await updateJob(job2);
-    let res = addJob(job3, project);
+    let res = await addJob(job3, project);
     // let res = await deleteJob(5);
     console.log(res);
 }
