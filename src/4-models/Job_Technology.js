@@ -111,7 +111,7 @@ async function test() {
     // let res = await addJob_Technology(job_tech);
     // let res = await getAllJobsPerTechnologyID(1);
     // let res = await getAllTechnologiesPerJobID(5);
-    let res = await getUserTypeLevel(5, 2);
+    // let res = await getUserTypeLevel(5, 2);
     // let res = await updateJob_Technology(job_tech);
     // let res = await delelteJob_Technology(7);
 
