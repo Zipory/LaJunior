@@ -90,4 +90,4 @@ async function test() {
     // let res = await deleteJob(5);
     console.log(res);
 }
-// test();
+test();
