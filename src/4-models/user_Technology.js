@@ -47,7 +47,7 @@ export async function getUser_Technology(User_TechnologyID) {
     return user_Technology;
 }
 
-/**Return object with userTypeLevel,
+/**Return the userTypeLevel number,
  * get arguments of user-id and technology-id numbers.
  */
 export async function getUserTypeLevel(UserID, TechnologyID) {
@@ -110,7 +110,7 @@ async function test() {
     // let res = await getAllTechnologyPerUserID(1);
     // let res = await getAllTechnologyPerUserID(1);
     // let res = await updateUser_Technology(user_tech1);
-    let res = await delelteUser_Technology(2);
+    // let res = await delelteUser_Technology(2);
     console.log(res);
 };
-test();
+// test();

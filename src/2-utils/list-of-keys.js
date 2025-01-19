@@ -5,5 +5,5 @@ const keys = [ 'UserName', 'Email', 'Phone', 'Password', 'Description',
                'ProjectName', 'Description', 'ProjectOwner',
                'JobTitle', 'JobDescription', 'ProjectID',
                'TechnologyName',
-               'TechnologyID' ];
+               'TechnologyID', ];
 export {keys};
