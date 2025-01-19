@@ -62,10 +62,10 @@ export async function deletetechnologiy(TechnologyID) {
 async function test() {
    let tech = {
     "TechnologyID": 1,
-    "TechnologyName": 'mongoDB'
+    "TechnologyName": 'server-sql'
    }
-    // let res = await addTechnology(tech);
-    let res = await getAllTechnologies();
+    let res = await addTechnology(tech);
+    // let res = await getAllTechnologies();
     // let res = await getTechnology(3);
     // let res = await updatetechnology(tech);
     // let res = await deletetechnologiy(1);

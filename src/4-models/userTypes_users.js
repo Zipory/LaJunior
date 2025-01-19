@@ -19,8 +19,8 @@ export async function getAllUserTypesPerUserID(UserID) {
     return userType;
 }
 
-/**Return array of all user-types per user-id,
- * get argument user-id number.
+/**Return array of all users per userType-id,
+ * get argument userType-id number.
  */
 export async function getAllUsersPerUserTypeID(UserTypeID) {
     let [users] = await pool.query(
@@ -45,7 +45,7 @@ export async function getUserTypes_Users(UserTypes_UsersID) {
     return user;
 }
 
-/**Return object with userTypeLevel,
+/**Return the userTypeLevel number,
  * get arguments of user-id and userType-id numbers.
  */
 export async function getUserTypeLevel(UserID, UserTypeID) {
