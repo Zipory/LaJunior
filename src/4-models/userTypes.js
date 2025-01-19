@@ -61,17 +61,17 @@ export async function delelteUserType(UserTypeID) {
 
 async function test() {
    let usertype = {
-    'UserTypeName': 'programmer'
+    'UserTypeName': 'manager'
    }
    let usertype2 = {
      'UserTypeID': 2,
     'UserTypeName': 'designer'
    }
-    let res = await addUserType(usertype2);
+    // let res = await addUserType(usertype);
     // let res = await getAllUserTypes();
     // let res = await getUserType(2);
     // let res = await updateUserType(usertype2);
-    // let res = await delelteUserType(1);
+    let res = await delelteUserType(3);
 
     console.log(res);
 }
