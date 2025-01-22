@@ -6,7 +6,7 @@ import helmet from "helmet";
 
 import routeNotFound from "./3-middleware/route-not-found";
 import catchAll from "./3-middleware/catch-all";
-import {initializeDbPool} from "./4-models/mysql_connection"
+// import {initializeDbPool} from "./4-models/mysql_connection"
 
 const server = express();
 
@@ -35,5 +35,5 @@ server.use(catchAll);
 
 server.listen( appConfig.port, async () => {
     console.log(`Listening to http://localhost:${appConfig.port}`);
-    await initializeDbPool();
+    // await initializeDbPool();
 })
