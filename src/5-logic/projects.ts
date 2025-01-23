@@ -30,7 +30,7 @@ export async function addProject(newproject: object) {
  * the argument is the new values as object of project (with ProjectID).
 */
 export async function updateProject(project: object) {
-    let isUpdate = dal.update(project, tableName)
+    let isUpdate = dal.update(tableName, project)
     return isUpdate;
 }
 

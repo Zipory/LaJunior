@@ -1,9 +1,9 @@
 import mysql, { Pool, PoolOptions } from 'mysql2/promise';
 import appConfig from './app-config';
-import { object } from 'joi';
+import { idKeyValuePair, idTransforme } from './useful-functions';
 
 console.log("hi friand!");
-/** DAL will handle akk the connections to the database. */
+/** DAL will handle all the connections to the database. */
 export class DAL {
     public dbConfig: PoolOptions = {
         host: appConfig.host,
@@ -70,14 +70,13 @@ export class DAL {
             where ${rowID} = ?`, id);
         return row;
     }
-    async selectPerAnotherID(tableName: string, obj: object): Promise<mysql.QueryResult>{
+    async selectPerAnotherID(tableName: string, obj: object): Promise<any>{
         const pool = await this.initializeDbPool();
-        let keys = Object.keys(obj);
-        let [idKey] = keys.filter((ar)=> ar.endsWith("ID"));
-        let idValue = obj[idKey] ;
-        const [row] = await pool.query(
+        let result = idKeyValuePair(obj);
+        const [key, id]= idKeyValuePair(obj);
+        let [row] = await pool.query(
             `SELECT * FROM ${tableName}
-            where ${idKey} = ?`, idValue);
+            where ${key} = ?`, id);
         return row;
     }
 
@@ -95,7 +94,7 @@ export class DAL {
         return res;
     }
 
-    async update(obj: object, tableName: string): Promise<[mysql.QueryResult, mysql.FieldPacket[]]> {
+    async update(tableName: string, obj: object): Promise<[mysql.QueryResult, mysql.FieldPacket[]]> {
         const pool = await this.initializeDbPool(); 
         const keys = Object.keys(obj);
         const id = idTransforme(tableName);
@@ -108,26 +107,26 @@ export class DAL {
         return res;
     };
 
-    async selectJoin(tableName: string, joins: Join[]): Promise<mysql.QueryResult> {
+    async selectJoin(tableName: string, joins: Join[], obj: object): Promise<mysql.QueryResult> {
         const pool = await this.initializeDbPool();
-        let sql = `SELECT * FROM ${tableName}`;
-
+        let sql = `SELECT * FROM ${tableName} `;
         joins.forEach(join => {
-            sql += `JOIN ${join.tableName} ON ${tableName}.${join.valueName} = ${join.tableName}.${join.valueName}`;
+            sql += `JOIN ${join.tableName} ON ${tableName}.${join.valueName} = ${join.tableName}.${join.valueName} `;
         });
-
-        const [rows] = await pool.query(sql);
+        const [key, id]= idKeyValuePair(obj);
+        sql += `WHERE ${key} = ?;`
+        const [rows] = await pool.query(sql, id);
         return rows;
     }
     /**Delete a specific row in a table. */
     async delete( tableName: string, obj: object) {
         const pool = await this.initializeDbPool();
-        let [key, id] = idKeyValuePair(obj);
+        const [key, id]= idKeyValuePair(obj);
         let [isDeleted] = await pool.query(
             `DELETE FROM ${tableName} 
-             WHERE ${key} = ?`, [id] 
+            WHERE ${key} = ?`, [id] 
         );
-        return isDeleted;
+    return isDeleted;
     }
 
     /**change the column 'isDeleted' in specific row to be true (1). */
@@ -160,17 +159,4 @@ export class Join {
         this.tableName = tableName;
         this.valueName = valueName;
     }
-}
-
-/**Return string that pressent the row-id. */
-function idTransforme(tableName: string) :string {
-    return tableName.substring(0,tableName.length-1)+'ID';
-}
-
-/**Return key :value of the ID in object. */
-function idKeyValuePair(obj: object) :Array<[string, number]> {
-    let keys = Object.keys(obj);
-    let [idKey] = keys.filter((ar)=> ar.endsWith("ID"));
-    let idValue = obj[idKey] ;
-    return [idKey, idValue];
 }

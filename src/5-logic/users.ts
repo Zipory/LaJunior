@@ -30,7 +30,7 @@ export async function addUser(newUser: object) {
  * the argument is the new values as object of user (with UserID).
 */
 export async function updateUser(user: object) {
-    let isUpdate = dal.update(user, tableName)
+    let isUpdate = dal.update(tableName, user)
     return isUpdate;
 }
 

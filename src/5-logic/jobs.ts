@@ -36,7 +36,7 @@ export async function addJob(newJob: object) {
  * the argument is the new values as object of job (with JobID).
 */
 export async function updateJob(job: object) {
-    let isUpdate = dal.update(job, tableName)
+    let isUpdate = dal.update(tableName, job)
     return isUpdate;
 }
 
@@ -75,15 +75,4 @@ async function test() {
     console.log(res);
     process.exit(0);
 }
-test();
-
-// let str: string = "ddd";
-// let arr: Array<string> = ['ggg', 'eeeID', 'fff'];
-// let [res] = arr.filter((ar)=> ar.endsWith("ID"));
-// console.log(res); 
-
-// let obj:object = {name: 'ita', id: 5};
-// let keys = Object.keys(obj);
-// let [key] = keys.filter((ar)=> ar.endsWith("id"));
-// console.log(key);
-// console.log(32, obj[key]);
+// test();
