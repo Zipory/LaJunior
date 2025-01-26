@@ -71,7 +71,7 @@ export class DAL {
         return row;
     }
 
-    
+
     async selectPerAnotherID(tableName: string, obj: object): Promise<any>{
         const pool = await this.initializeDbPool();
         const [key, id]= idKeyValuePair(obj);
@@ -95,6 +95,11 @@ export class DAL {
         return res;
     }
 
+    /**Update a row in a table.
+     * @param tableName is the table.
+     * @param obj is the new object that need to replace the old row,
+     * need to have ID number in it.
+     */
     async update(tableName: string, obj: object): Promise<[mysql.QueryResult, mysql.FieldPacket[]]> {
         const pool = await this.initializeDbPool(); 
         const keys = Object.keys(obj);
@@ -108,6 +113,11 @@ export class DAL {
         return res;
     };
 
+    /**Return array of rows that represent the join table, In accordance to obj-ID.
+     * @param tableName the main table.
+     * @param joins array of Join class with [tableName, valueName] pairs.
+     * @param obj an object represent the specific collection.
+     */
     async selectJoin(tableName: string, joins: Join[], obj: object): Promise<mysql.QueryResult> {
         const pool = await this.initializeDbPool();
         let sql = `SELECT * FROM ${tableName} `;
@@ -121,6 +131,7 @@ export class DAL {
         const [rows] = await pool.query(sql, id);
         return rows;
     }
+    
     /**Delete a specific row in a table. */
     async delete( tableName: string, obj: object) {
         const pool = await this.initializeDbPool();
