@@ -47,16 +47,18 @@ async function test() {
             Description : "nice guy"
     }
     let person2 = {
-        UserID : 3,
-        UserName : "Beny",
-         Email : "change@good",
-          Phone : "051238776661",
-           Password : "222222",
-            Description : "vote for trump "
+        UsersID : 2,
+        UserName : "Yosy Brach",
+         Email : "very@good",
+          Phone : "05666111",
+           Password : "331122",
+            Description : "save the dogs! "
     }
+    console.log('test result:');
+    
     // let res = await addUser(person2);
-    let res = await getAllUsers();
-    // let res = await getUser(2) ;
+    // let res = await getAllUsers();
+    let res = await getUser(2) ;
     // let res = await updateUser(person2) ;
 
     console.log(res);

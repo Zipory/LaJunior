@@ -1,8 +1,8 @@
 
 /**Return string that pressent the row-id, according to tableName. */
 export function idTransforme(tableName: string) :string {
-    return tableName.substring(0,tableName.length-1)+'ID';
-}
+    return tableName+'ID';
+};
 
 /** Return [key, value] of the ID in object. */
 export function idKeyValuePair(obj: Record<string, any>): [string, number] {
@@ -12,6 +12,11 @@ export function idKeyValuePair(obj: Record<string, any>): [string, number] {
       const idValue = obj[idKey];
       return [idKey, idValue];
     }
-    return ["ID", -1];
-  }
+    return ["dontHaveID", -1];
+  };
   
+  // Format the date as 'DD-MM-YYYY'
+export function formatDateTime(dateTime: any) {
+const formattedDate = dateTime.toLocaleDateString('en-GB').replace(/\//g, '-');
+return formattedDate;
+};

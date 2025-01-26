@@ -8,7 +8,7 @@ class DevelopmentConfig extends AppConfig{
 
     public password = '123456';
 
-    public database = 'nextJuni';
+    public database = 'LaJunior';
 
     public port = 4000;
 

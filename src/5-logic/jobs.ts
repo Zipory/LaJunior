@@ -48,30 +48,32 @@ export async function deleteJob(job: object) {
 
 async function test() {
     let job = {
+        "JobsID" : 1,
         'JobTitle' : "programer",
     'JobDescription' : "cood code handle with java (includ stream)",
-    
+       ProjectsID: 2
     }
     let job2 = {
-        "JobID" : 3,
+        "JobsID" : 3,
         'JobTitle' : "designer",
-    'JobDescription' : "good work with AI",
+    'JobDescription' : "good work with AI and figma",
+       ProjectsID: 1
     }
     let job3 = {
         'JobTitle' : "programer",
     'JobDescription' : "best in DAL",
-    ProjectID: 4
+    ProjectsID: 3
     }
     let project = {
-        ProjectID : 3
+        ProjectsID : 3
     }
-    let UserID = 3;
+    let UsersID = 3;
     // let res = await getAllJobsPerProject(project);
     let res = await getAllJobs();
-    // let res = await getJob(3);
+    // let res = await getJob(4);
     // let res = await updateJob(job2);
-    // let res = await addJob(job3);
-    // let res = await deleteJob(job2);
+    // let res = await addJob(job);
+    // let res = await deleteJob(job);
     console.log(res);
     process.exit(0);
 }

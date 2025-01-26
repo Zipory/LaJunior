@@ -70,9 +70,10 @@ export class DAL {
             where ${rowID} = ?`, id);
         return row;
     }
+
+    
     async selectPerAnotherID(tableName: string, obj: object): Promise<any>{
         const pool = await this.initializeDbPool();
-        let result = idKeyValuePair(obj);
         const [key, id]= idKeyValuePair(obj);
         let [row] = await pool.query(
             `SELECT * FROM ${tableName}
@@ -113,7 +114,9 @@ export class DAL {
         joins.forEach(join => {
             sql += `JOIN ${join.tableName} ON ${tableName}.${join.valueName} = ${join.tableName}.${join.valueName} `;
         });
+        console.log(obj);
         const [key, id]= idKeyValuePair(obj);
+        console.log(key + "  " + id);
         sql += `WHERE ${key} = ?;`
         const [rows] = await pool.query(sql, id);
         return rows;

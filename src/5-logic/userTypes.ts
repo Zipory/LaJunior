@@ -38,19 +38,19 @@ export async function delelteUserType(userType: object) {
 }
 async function test() {
     let usertype = {
-     'UserTypeName': 'manager'
+     'UserTypeName': 'designer'
     }
     let usertype2 = {
-      'UserTypeID': 5,
-     'UserTypeName': 'Marketing'
+      'UserTypesID': 3,
+     'UserTypeName': 'borboring'
     }
     //  let res = await addUserType(usertype2);
      let res = await getAllUserTypes();
-    //  let res = await getUserType(5);
+    //  let res = await getUserType(3);
     //  let res = await updateUserType(usertype2);
     //  let res = await delelteUserType(usertype2);
  
      console.log(res);
      process.exit(0);
     }
-//  test();
+ test();
