@@ -8,16 +8,36 @@ await initializeDbPool();
 
 
 
-
-
-/**add new project to the database,
- * the first argument is object of the new project,
- * the second is object of the user that create the project.
+/**Return object with project_User info,
+ * get argument project_User-id number.
  */
-export async function addProject({UserID, ProjectID, UserTypeID}) { 
+export async function getProject_User(Projects_UsersID) {
+    let [[project_User]] = await pool.query(
+         `SELECT Projects_UsersID, UserID, ProjectID, UserTypeID
+          FROM Projects_Users
+          WHERE Projects_UsersID = ?`, [Projects_UsersID]
+    );
+    return project_User;
+};
+
+/**add new project_User to the database,
+ * the argument is object of the new project_User connection.
+ */
+export async function addProject_User({UserID, ProjectID, UserTypeID}) { 
     let [isCreated] = await pool.query(
-        `INSERT INTO Projects(ProjectName, Description, ProjectOwner)
-         VALUES(?, ?, ?);`, [ProjectName, Description, UserID]
+        `INSERT INTO Projects_Users(UserID, ProjectID, UserTypeID)
+         VALUES(?, ?, ?);`, [UserID, ProjectID, UserTypeID]
     );
     return isCreated["affectedRows"];
+};
+
+async function test() {
+    let project_User = {
+        UserID : 1, 
+        ProjectID : 3, 
+        UserTypeID : 2
+    }
+    let res = await addProject_User(project_User);
+    console.log(res);
 }
+test();

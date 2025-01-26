@@ -15,6 +15,7 @@ export async function getAllProjects() {
     return projects;
 }
 
+
 /**Return object with project info,
  * get argument project id number.
  */
@@ -89,4 +90,4 @@ async function test() {
     console.log(res);
     
 }
-test();
+// test();
