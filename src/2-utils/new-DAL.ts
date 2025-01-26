@@ -71,6 +71,11 @@ export class DAL {
         return row;
     }
 
+    async selectWhereMulty(tableName: string, id: number): Promise<mysql.QueryResult>{
+        const pool = await this.initializeDbPool();
+        
+    }
+
 
     async selectPerAnotherID(tableName: string, obj: object): Promise<any>{
         const pool = await this.initializeDbPool();
@@ -131,7 +136,7 @@ export class DAL {
         const [rows] = await pool.query(sql, id);
         return rows;
     }
-    
+
     /**Delete a specific row in a table. */
     async delete( tableName: string, obj: object) {
         const pool = await this.initializeDbPool();

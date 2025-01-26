@@ -42,7 +42,7 @@ export async function updateJob(job: object) {
 
 /**delete job perematly, the argument is job number. */
 export async function deleteJob(job: object) {
-    let isDeleted = await dal.delete(tableName, job)
+    let isDeleted = await dal.delete(tableName, job);
     return isDeleted;
 }
 

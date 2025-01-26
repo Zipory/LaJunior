@@ -41,8 +41,7 @@ export async function getUserTypes_Users(UserTypes_UsersID: number) {
 /**Return the userTypeLevel number,
  * get arguments of user-id and userType-id numbers.
  */
-export async function getUserTypeLevel(UserID, UserTypeID) {
-
+export async function getUserTypeLevel(UserID: object, UserTypeID: object) {  
 }
 
 /**add new UserTypes_Users to the database,
@@ -56,22 +55,24 @@ export async function addUserType_User(newUserType_User: object) {
 /**update exists UserTypes_Users connection,
  * the argument is the new values as object of UserTypes_Users (with UserTypes_UsersID).
 */
-export async function updateUserTypes_Users(newUserTypes_Users) {
-
+export async function updateUserTypes_Users(newUserTypes_Users: object) {
+    let isUpdate = dal.update(tableName, newUserTypes_Users);
+    return isUpdate;
 }
 
 /**delete UserTypes_Users perematly, the argument is UserTypes_Users id number. */
-export async function delelteUserTypes_Users(UserTypes_UsersID) {
-
+export async function delelteUserTypes_Users(UserTypes_UsersID: object) {
+    let isDeleted = await dal.delete(tableName, UserTypes_UsersID);
+    return isDeleted;
 }
 
 
 async function test() {
     let UserTypes_Users = {
-        UserTypes_UsersID : 3,
-        UserTypesID : 1,
-        UsersID : 1,
-        UserLevel : 3
+        UserTypes_UsersID : 1,
+        UserTypesID : 2,
+        UsersID : 2,
+        UserLevel : 2
     }
     let UserTypes_Users1 = {
         UserTypesID : 5,
@@ -86,12 +87,12 @@ async function test() {
     }
     // let res = await addUserType_User(UserTypes_Users1);
     // let res = await getUserTypeLevel();
-    // let res = await getUserTypes_Users(5);
-    // let res = await getAllUserTypes();
-    let res = await getAllUserTypesPerUserID(user);
+    // let res = await getUserTypes_Users(1);
+    let res = await getAllUserTypes();
+    // let res = await getAllUserTypesPerUserID(user);
     // let res = await getAllUsersPerUserTypeID(user_type);
     // let res = await updateUserTypes_Users(UserTypes_Users);
-    // let res = await delelteUserTypes_Users(6);
+    // let res = await delelteUserTypes_Users(UserTypes_Users);
     console.log(res);
     process.exit(0);
 };
