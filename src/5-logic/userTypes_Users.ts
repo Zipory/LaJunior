@@ -16,8 +16,9 @@ export async function getAllUserTypes() {
  * get argument user object.
  */
 export async function getAllUserTypesPerUserID(User: object) {
-    let join: Join = new Join("usertypes", "UserTypesID");
-    let joins = [join];
+    let joins: Join[] = [];
+    joins.push( new Join("usertypes", "UserTypesID") );
+    joins.push( new Join("Users", "UsersID") );
     let userTypes = dal.selectJoin(tableName, joins, User);
     return userTypes;
 }
@@ -26,8 +27,9 @@ export async function getAllUserTypesPerUserID(User: object) {
  * get argument userType-id number.
  */
 export async function getAllUsersPerUserTypeID(userType: object) {
-    let join: Join= new Join("Users", "UsersID");
-    let joins = [join];
+    let joins: Join[] = [];
+    joins.push( new Join("usertypes", "UserTypesID") );
+    joins.push( new Join("Users", "UsersID") );
     let users = dal.selectJoin(tableName, joins, userType);
     return users;   
 }
@@ -94,10 +96,10 @@ async function test() {
     }
     // let res = await addUserType_User(UserTypes_Users1);
     // let res = await getUserTypeLevel(user, user_type);
-    let res = await getUserTypes_Users(10);
+    // let res = await getUserTypes_Users(10);
     // let res = await getAllUserTypes();
     // let res = await getAllUserTypesPerUserID(user);
-    // let res = await getAllUsersPerUserTypeID(user_type);
+    let res = await getAllUsersPerUserTypeID(user_type);
     // let res = await updateUserTypes_Users(UserTypes_Users);
     // let res = await delelteUserTypes_Users(UserTypes_Users);
     console.log(res);

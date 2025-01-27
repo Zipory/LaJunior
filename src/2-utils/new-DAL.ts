@@ -2,7 +2,6 @@ import mysql, { Pool, PoolOptions } from 'mysql2/promise';
 import appConfig from './app-config';
 import { idKeyValuePair, idTransforme } from './useful-functions';
 import { Join, Where } from './calsses';
-// import { object } from 'joi';
 
 console.log("hi friand!");
 /** DAL will handle all the connections to the database. */
@@ -81,7 +80,6 @@ export class DAL {
      */
     async selectWhereMulty(tableName: string, arr: Where[] = []): Promise<any>{
         const pool = await this.initializeDbPool();
-        
         let sql = `SELECT * FROM ${tableName} WHERE `;
         let val: (string | number)[] = [];
         arr.forEach( (obj, index) => {
@@ -90,13 +88,12 @@ export class DAL {
             val.push(obj.value);
         });
         sql += ';';
-        console.log(sql);
-        console.log(val);
         let [row] = await pool.query(sql, val);
         return row;
     }
 
 
+    /** I think that 'selectWhereMulty' function can replace that function !!! */
     async selectPerAnotherID(tableName: string, obj: object): Promise<any>{
         const pool = await this.initializeDbPool();
         const [key, id]= idKeyValuePair(obj);
@@ -149,15 +146,13 @@ export class DAL {
         joins.forEach(join => {
             sql += `JOIN ${join.tableName} ON ${tableName}.${join.valueName} = ${join.tableName}.${join.valueName} `;
         });
-        console.log(obj);
         const [key, id]= idKeyValuePair(obj);
-        console.log(key + "  " + id);
-        sql += `WHERE ${key} = ?;`
+        sql += `WHERE ${tableName}.${key} = ?;`
         const [rows] = await pool.query(sql, id);
         return rows;
     }
 
-    /**Delete a specific row in a table. */
+    /**Delete a specific row in a table. (Do not use for users or projects!)*/
     async delete( tableName: string, obj: object) {
         const pool = await this.initializeDbPool();
         const [key, id]= idKeyValuePair(obj);
@@ -168,7 +163,7 @@ export class DAL {
     return isDeleted;
     }
 
-    /**change the column 'isDeleted' in specific row to be true (1). */
+    /**change the column 'isDeleted' in specific row to be true (1). (Use for projects only!) */
     async setIsDeleted(tableName: string, id: number): Promise<any> {
         const pool = await this.initializeDbPool();
         const rowID = idTransforme(tableName);
@@ -180,22 +175,3 @@ export class DAL {
         return isDeleted;
     }
 }
-
-// export async function deleteProject({ProjectID}) {
-//     let [isDeleted] = await pool.query(
-//         `UPDATE Projects
-//          SET isDeleted = 1
-//          WHERE ProjectID = '?';`, ProjectID
-//         );
-//     return isDeleted;
-// }
-
-// export class Join {
-//     tableName: string;
-//     valueName: string;
-
-//     constructor(tableName: string, valueName: string) {
-//         this.tableName = tableName;
-//         this.valueName = valueName;
-//     }
-// }
