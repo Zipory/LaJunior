@@ -1,6 +1,8 @@
 import mysql, { Pool, PoolOptions } from 'mysql2/promise';
 import appConfig from './app-config';
 import { idKeyValuePair, idTransforme } from './useful-functions';
+import { Join, Where } from './calsses';
+// import { object } from 'joi';
 
 console.log("hi friand!");
 /** DAL will handle all the connections to the database. */
@@ -65,15 +67,33 @@ export class DAL {
     async selectWhere(tableName: string, id: number): Promise<mysql.QueryResult>{
         const pool = await this.initializeDbPool();
         const rowID = idTransforme(tableName);
-        const [[row]] = await pool.query(
+        const [row] = await pool.query(
             `SELECT * FROM ${tableName}
             where ${rowID} = ?`, id);
         return row;
     }
 
-    async selectWhereMulty(tableName: string, id: number): Promise<mysql.QueryResult>{
+    /**Return a specific row In accordance to some ids.
+     * @param tableName the mane of the table.
+     * @param arr=[] array of objects with {key, value},
+     * the key is the name of the id,
+     * the value is the id value.
+     */
+    async selectWhereMulty(tableName: string, arr: Where[] = []): Promise<any>{
         const pool = await this.initializeDbPool();
         
+        let sql = `SELECT * FROM ${tableName} WHERE `;
+        let val: (string | number)[] = [];
+        arr.forEach( (obj, index) => {
+            if (index > 0) {sql += " AND "};
+            sql += ` ${obj.key} = ? `;
+            val.push(obj.value);
+        });
+        sql += ';';
+        console.log(sql);
+        console.log(val);
+        let [row] = await pool.query(sql, val);
+        return row;
     }
 
 
@@ -170,12 +190,12 @@ export class DAL {
 //     return isDeleted;
 // }
 
-export class Join {
-    tableName: string;
-    valueName: string;
+// export class Join {
+//     tableName: string;
+//     valueName: string;
 
-    constructor(tableName: string, valueName: string) {
-        this.tableName = tableName;
-        this.valueName = valueName;
-    }
-}
+//     constructor(tableName: string, valueName: string) {
+//         this.tableName = tableName;
+//         this.valueName = valueName;
+//     }
+// }
