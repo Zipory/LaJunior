@@ -1,4 +1,6 @@
-import {DAL, Join} from "../2-utils/new-DAL.js"
+import { Join, Where } from "../2-utils/calsses.js";
+import {DAL} from "../2-utils/new-DAL.js"
+import { idKeyValuePair } from "../2-utils/useful-functions.js";
 
 
 const tableName: string = 'UserTypes_Users';
@@ -39,9 +41,14 @@ export async function getUserTypes_Users(UserTypes_UsersID: number) {
 }
 
 /**Return the userTypeLevel number,
- * get arguments of user-id and userType-id numbers.
+ * get arguments of user and userType as objects.
  */
-export async function getUserTypeLevel(UserID: object, UserTypeID: object) {  
+export async function getUserTypeLevel(user: object, userType: object) {
+    let array: Where[] = [];
+    array.push(new Where(...idKeyValuePair(user)));
+    array.push(new Where(...idKeyValuePair(userType)));
+    let row = await dal.selectWhereMulty(tableName, array);
+    return row;
 }
 
 /**add new UserTypes_Users to the database,
@@ -86,9 +93,9 @@ async function test() {
         UserTypesID: 2
     }
     // let res = await addUserType_User(UserTypes_Users1);
-    // let res = await getUserTypeLevel();
-    // let res = await getUserTypes_Users(1);
-    let res = await getAllUserTypes();
+    // let res = await getUserTypeLevel(user, user_type);
+    let res = await getUserTypes_Users(10);
+    // let res = await getAllUserTypes();
     // let res = await getAllUserTypesPerUserID(user);
     // let res = await getAllUsersPerUserTypeID(user_type);
     // let res = await updateUserTypes_Users(UserTypes_Users);

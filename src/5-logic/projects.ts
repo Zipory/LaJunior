@@ -1,4 +1,6 @@
+import { Where } from "../2-utils/calsses.js";
 import {DAL} from "../2-utils/new-DAL.js"
+import { idKeyValuePair } from "../2-utils/useful-functions.js";
 
 
 const tableName: string = 'projects';
@@ -18,14 +20,17 @@ export async function getProject(ProjectID: number) : Promise<any>{
     return project;
 }
 
-/** NOT WORK!!: created to compare object-owner to users-ID, 
- * but the dal.selectPerAnotherID function is not good for that checking,
- * TODO: need to create another dal.function for that select...
+/** Return array of all the project per the owner, 
+ * @param user is argument is the user that is the owner of the projects outcome.
  */
 export async function getAllProjectsPerProjectOwner(user: object) : Promise<any> {
-    let projects = await dal.selectPerAnotherID(tableName, user);
-    return projects;
-}
+      let array: Where[] = [];
+    //    array.push(new Where(...idKeyValuePair(user)));
+       let [key, value] = idKeyValuePair(user);
+       array.push(new Where('ProjectOwner', value));
+       let row = await dal.selectWhereMulty(tableName, array);
+       return row;
+};
 
 /**add new project to the database,
  * the argument is object of the new project.
@@ -33,7 +38,7 @@ export async function getAllProjectsPerProjectOwner(user: object) : Promise<any>
 export async function addProject(newproject: object) {
     let isCreate =  await dal.post(newproject, tableName);
     return isCreate;
-}
+};
 
 /**update exists project
  * the argument is the new values as object of project (with ProjectID).
@@ -44,7 +49,7 @@ export async function updateProject(project: object) {
 }
 
 /**delete project, change the column 'isDeleted' to be true (1).
- * @param ProjectID is a number of the project-id.
+ * @param Project is the project object.
  */
 export async function deleteProject(Project: object) {
     let ProjectsID: any;
@@ -65,13 +70,10 @@ async function test() {
         Description : "best project ever and ever and ever!!!",
         ProjectOwner : 2
     }
-    let user = {
-        projectOwner : 2
-    }
     let UserID = 3;
     
     let person2 = {
-        UsersID : 2,
+        UsersID : 1,
         UserName : "Moty",
         Email : "bos@bos",
         Phone : "05123123321",
@@ -79,11 +81,12 @@ async function test() {
         Description : "very nice guy "
     }
     // let res = await addProject(project);
-    let res = await getAllProjects();
+    // let res = await getAllProjects();
     // let res = await getProject(2);
+    let res = await getAllProjectsPerProjectOwner(person2);
     // let res = await updateProject(project);
     // let res = await deleteProject(project);
     console.log(res);
     process.exit(0);
 }
-// test();
+test();

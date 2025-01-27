@@ -1,4 +1,6 @@
+import { Where } from "../2-utils/calsses.js";
 import {DAL} from "../2-utils/new-DAL.js"
+import { idKeyValuePair } from "../2-utils/useful-functions.js";
 
 
 const tableName: string = 'Jobs';
@@ -12,7 +14,10 @@ export async function getAllJobs() {
 
 /**Return array of jobs per project. */
 export async function getAllJobsPerProject(project: object) {
-        let jobs = dal.selectPerAnotherID(tableName, project);
+        // let jobs = dal.selectPerAnotherID(tableName, project);
+        let array: Where[] = [];
+         array.push(new Where(...idKeyValuePair(project)));
+        let jobs = dal.selectWhereMulty(tableName, array);
         return jobs;
     }
 
@@ -68,8 +73,8 @@ async function test() {
         ProjectsID : 3
     }
     let UsersID = 3;
-    // let res = await getAllJobsPerProject(project);
-    let res = await getAllJobs();
+    let res = await getAllJobsPerProject(project);
+    // let res = await getAllJobs();
     // let res = await getJob(4);
     // let res = await updateJob(job2);
     // let res = await addJob(job);
@@ -77,4 +82,4 @@ async function test() {
     console.log(res);
     process.exit(0);
 }
-// test();
+test();

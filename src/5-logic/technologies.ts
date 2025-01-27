@@ -47,14 +47,14 @@ export async function deletetechnologiy(technology: object) {
 
 async function test() {
     let tech = {
-    //  "TechnologyID": 1,
+     "TechnologiesID": 1,
      "TechnologyName": 'Figma'
     }
     //  let res = await addTechnology(tech);
-    //  let res = await getAllTechnologies();
-     let res = await getTechnology(3);
+     let res = await getAllTechnologies();
+    //  let res = await getTechnology(3);
      // let res = await updatetechnology(tech);
-     // let res = await deletetechnologiy(1);
+    //  let res = await deletetechnologiy(tech);
  
      console.log(res);
      process.exit(0);
